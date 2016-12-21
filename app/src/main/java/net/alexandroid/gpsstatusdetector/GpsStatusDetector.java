@@ -53,11 +53,7 @@ public class GpsStatusDetector implements
     }
 
     private boolean isGpsEnabled(Activity activity) {
-        final LocationManager manager =
-                (LocationManager) activity.getSystemService(Context.LOCATION_SERVICE);
-        boolean isGpsEnabled = manager.isProviderEnabled(LocationManager.GPS_PROVIDER);
-        MyLog.d(isGpsEnabled ? "GPS is enabled" : "GPS is disabled");
-        return isGpsEnabled;
+        return ((LocationManager) activity.getSystemService(Context.LOCATION_SERVICE)).isProviderEnabled(LocationManager.GPS_PROVIDER);
     }
 
 
@@ -107,7 +103,6 @@ public class GpsStatusDetector implements
             }
         });
     }
-
 
 
     public void checkOnActivityResult(int requestCode, int resultCode) {
