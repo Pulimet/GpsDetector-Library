@@ -28,8 +28,7 @@ dependencies {
     compile 'com.android.support:design:25.1.0'
     testCompile 'junit:junit:4.12'
 
-    compile 'com.google.android.gms:play-services-gcm:10.0.1'
-    compile 'com.google.android.gms:play-services-location:10.0.1'
 
     compile 'net.alexandroid.utils:shpref:1.4'
+    compile project(':gps')
 }

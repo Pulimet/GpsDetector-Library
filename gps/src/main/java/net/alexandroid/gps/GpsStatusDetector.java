@@ -1,4 +1,4 @@
-package net.alexandroid.gpsstatusdetector;
+package net.alexandroid.gps;
 
 
 import android.app.Activity;
@@ -8,6 +8,7 @@ import android.location.LocationManager;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.util.Log;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
@@ -20,8 +21,6 @@ import com.google.android.gms.location.LocationSettingsRequest;
 import com.google.android.gms.location.LocationSettingsResult;
 import com.google.android.gms.location.LocationSettingsStatusCodes;
 
-import net.alexandroid.shpref.MyLog;
-
 import java.lang.ref.WeakReference;
 
 import static android.app.Activity.RESULT_OK;
@@ -29,6 +28,7 @@ import static android.app.Activity.RESULT_OK;
 public class GpsStatusDetector implements
         GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener {
 
+    private static final String LOG_TAG = "LOG_TAG";
     public static final int REQUEST_CODE = 2;
 
     private WeakReference<Activity> mActivityWeakReference;
@@ -58,8 +58,6 @@ public class GpsStatusDetector implements
 
 
     private void setLocationRequest(final Activity activity, final GpsStatusDetectorCallBack callBack) {
-        MyLog.d("");
-
         final GoogleApiClient mGoogleApiClient = new GoogleApiClient.Builder(activity)
                 .addConnectionCallbacks(this)
                 .addOnConnectionFailedListener(this)
@@ -132,16 +130,16 @@ public class GpsStatusDetector implements
     //  GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener
     @Override
     public void onConnected(@Nullable Bundle bundle) {
-        MyLog.d("onConnected");
+        Log.d(LOG_TAG, "onConnected");
     }
 
     @Override
     public void onConnectionSuspended(int i) {
-        MyLog.d("oonConnectionSuspended");
+        Log.d(LOG_TAG, "oonConnectionSuspended");
     }
 
     @Override
     public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
-        MyLog.d("onConnectionFailed:  " + connectionResult.toString());
+        Log.d(LOG_TAG, "onConnectionFailed:  " + connectionResult.toString());
     }
 }

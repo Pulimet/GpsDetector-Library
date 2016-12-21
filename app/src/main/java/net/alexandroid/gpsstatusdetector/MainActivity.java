@@ -7,6 +7,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 
+import net.alexandroid.gps.GpsStatusDetector;
 import net.alexandroid.shpref.MyLog;
 
 public class MainActivity extends AppCompatActivity
