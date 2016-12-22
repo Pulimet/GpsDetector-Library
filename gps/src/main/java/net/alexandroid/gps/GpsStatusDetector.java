@@ -24,7 +24,6 @@ import static android.app.Activity.RESULT_OK;
 
 public class GpsStatusDetector {
 
-    private static final String LOG_TAG = "LOG_TAG";
     private static final int REQUEST_CODE = 2;
 
     private WeakReference<Activity> mActivityWeakReference;
