@@ -1,5 +1,7 @@
 [ ![Download](https://api.bintray.com/packages/pulimet/utils/gps/images/download.svg) ](https://bintray.com/pulimet/utils/gps/_latestVersion)
 
+[![Android Arsenal](https://img.shields.io/badge/Android%20Arsenal-GpsDetector-brightgreen.svg?style=flat)](http://android-arsenal.com/details/1/4916)
+
 # Gps Detector - Android Library
 
 When GPS disabled shows a dialog and on accept enable it without a need to open android settings
