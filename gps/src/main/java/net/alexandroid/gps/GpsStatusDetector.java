@@ -5,13 +5,9 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.IntentSender;
 import android.location.LocationManager;
-import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 
-import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.common.api.PendingResult;
 import com.google.android.gms.common.api.ResultCallback;
@@ -26,8 +22,7 @@ import java.lang.ref.WeakReference;
 
 import static android.app.Activity.RESULT_OK;
 
-public class GpsStatusDetector implements
-        GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener {
+public class GpsStatusDetector {
 
     private static final String LOG_TAG = "LOG_TAG";
     private static final int REQUEST_CODE = 2;
@@ -66,8 +61,6 @@ public class GpsStatusDetector implements
 
     private void setLocationRequest(final Activity activity, final GpsStatusDetectorCallBack callBack) {
         final GoogleApiClient mGoogleApiClient = new GoogleApiClient.Builder(activity)
-                .addConnectionCallbacks(this)
-                .addOnConnectionFailedListener(this)
                 .addApi(LocationServices.API).build();
         mGoogleApiClient.connect();
 
@@ -133,20 +126,4 @@ public class GpsStatusDetector implements
         void onGpsAlertCanceledByUser();
     }
 
-
-    //  GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener
-    @Override
-    public void onConnected(@Nullable Bundle bundle) {
-        Log.d(LOG_TAG, "onConnected");
-    }
-
-    @Override
-    public void onConnectionSuspended(int i) {
-        Log.d(LOG_TAG, "oonConnectionSuspended");
-    }
-
-    @Override
-    public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
-        Log.d(LOG_TAG, "onConnectionFailed:  " + connectionResult.toString());
-    }
 }
