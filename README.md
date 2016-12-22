@@ -60,28 +60,44 @@ public void onGpsAlertCanceledByUser() {
 
 - Create GpsStatusDetector instance, invoke checkLocationSettingStatus() method where you need.
 ```sh
-    private GpsStatusDetector mGpsStatusDetector;
+private GpsStatusDetector mGpsStatusDetector;
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+@Override
+protected void onCreate(Bundle savedInstanceState) {
+    super.onCreate(savedInstanceState);
+    setContentView(R.layout.activity_main);
 
-        mGpsStatusDetector = new GpsStatusDetector(this);
-        mGpsStatusDetector.checkLocationSettingStatus();
-    }
+    mGpsStatusDetector = new GpsStatusDetector(this);
+    mGpsStatusDetector.checkLocationSettingStatus();
+}
 ```
 
 - Override onActivityResult and add checkOnActivityResult() method as shown below:
 ```sh
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        mGpsStatusDetector.checkOnActivityResult(requestCode, resultCode);
-    }  
+@Override
+protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+    super.onActivityResult(requestCode, resultCode, data);
+    mGpsStatusDetector.checkOnActivityResult(requestCode, resultCode);
+}  
 ```
 
  Thats it. You are ready to go!
+ 
+ 
+# Fragment support
+ 
+ 
+ Add this in your activity class:
+ 
+ ```sh
+ @Override
+ protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+     super.onActivityResult(requestCode, resultCode, data);
+     for (Fragment fragment : getSupportFragmentManager().getFragments()) {
+         fragment.onActivityResult(requestCode, resultCode, data);
+     }
+}
+ ```
 
 
 # License
