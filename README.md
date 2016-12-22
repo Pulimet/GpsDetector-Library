@@ -16,13 +16,13 @@ repositories {
 }
 
 dependencies {
-    compile 'net.alexandroid.utils:gps:1.3'
+    compile 'net.alexandroid.utils:gps:1.6'
 }
 ```
 
 If you experiencing version conflicts with play services libraries use exclude as shown below:
 ```sh
-compile ('net.alexandroid.utils:gps:1.3') {
+compile ('net.alexandroid.utils:gps:1.6') {
     exclude group: 'com.google.android.gms', module: 'play-services-location'
     exclude group: 'com.google.android.gms', module: 'play-services-gcm'
 }

@@ -35,7 +35,7 @@ public class GpsStatusDetector {
     }
 
     public GpsStatusDetector(Fragment fragment) {
-        this.mActivityWeakReference = new WeakReference<>(fragment.getActivity().getParent());
+        this.mActivityWeakReference = new WeakReference<>((Activity) fragment.getActivity());
         this.mCallBackWeakReference = new WeakReference<>((GpsStatusDetectorCallBack) fragment);
     }
 
