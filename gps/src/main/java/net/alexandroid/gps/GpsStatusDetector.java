@@ -27,7 +27,9 @@ public class GpsStatusDetector {
     private static final int REQUEST_CODE = 2;
 
     private WeakReference<Activity> mActivityWeakReference;
+    private WeakReference<Fragment> mFragmentWeakReference;
     private WeakReference<GpsStatusDetectorCallBack> mCallBackWeakReference;
+    private boolean isFragment;
 
     public GpsStatusDetector(Activity activity) {
         this.mActivityWeakReference = new WeakReference<>(activity);
@@ -35,7 +37,9 @@ public class GpsStatusDetector {
     }
 
     public GpsStatusDetector(Fragment fragment) {
+        isFragment = true;
         this.mActivityWeakReference = new WeakReference<>(fragment.getActivity().getParent());
+        this.mFragmentWeakReference = new WeakReference<>(fragment);
         this.mCallBackWeakReference = new WeakReference<>((GpsStatusDetectorCallBack) fragment);
     }
 
@@ -85,11 +89,7 @@ public class GpsStatusDetector {
                         callBack.onGpsSettingStatus(true);
                         break;
                     case LocationSettingsStatusCodes.RESOLUTION_REQUIRED:
-                        try {
-                            status.startResolutionForResult(activity, REQUEST_CODE);
-                        } catch (IntentSender.SendIntentException e) {
-                            callBack.onGpsSettingStatus(false);
-                        }
+                        showAlertDialog(status, activity, callBack);
                         break;
                     case LocationSettingsStatusCodes.SETTINGS_CHANGE_UNAVAILABLE:
                         callBack.onGpsSettingStatus(false);
@@ -99,6 +99,19 @@ public class GpsStatusDetector {
                 mGoogleApiClient.disconnect(); // If you do not disconnect, causes a memory leak
             }
         });
+    }
+
+    private void showAlertDialog(Status status, Activity activity, GpsStatusDetectorCallBack callBack) {
+        try {
+            if (isFragment) {
+                Fragment fragment = mFragmentWeakReference.get();
+                fragment.startIntentSenderForResult(status.getResolution().getIntentSender(), REQUEST_CODE, null, 0, 0, 0, null);
+            } else {
+                status.startResolutionForResult(activity, REQUEST_CODE);
+            }
+        } catch (IntentSender.SendIntentException e) {
+            callBack.onGpsSettingStatus(false);
+        }
     }
 
 
