@@ -8,6 +8,7 @@ import android.location.LocationManager;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
 import android.util.Log;
 
 import com.google.android.gms.common.ConnectionResult;
@@ -29,21 +30,27 @@ public class GpsStatusDetector implements
         GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener {
 
     private static final String LOG_TAG = "LOG_TAG";
-    public static final int REQUEST_CODE = 2;
+    private static final int REQUEST_CODE = 2;
 
     private WeakReference<Activity> mActivityWeakReference;
+    private WeakReference<GpsStatusDetectorCallBack> mCallBackWeakReference;
 
     public GpsStatusDetector(Activity activity) {
         this.mActivityWeakReference = new WeakReference<>(activity);
+        this.mCallBackWeakReference = new WeakReference<>((GpsStatusDetectorCallBack) activity);
     }
 
-    public void checkLocationSettingStatus() {
+    public GpsStatusDetector(Fragment fragment) {
+        this.mActivityWeakReference = new WeakReference<>(fragment.getActivity().getParent());
+        this.mCallBackWeakReference = new WeakReference<>((GpsStatusDetectorCallBack) fragment);
+    }
+
+    public void checkGpsStatus() {
         Activity activity = mActivityWeakReference.get();
-        if (activity == null) {
+        GpsStatusDetectorCallBack callBack = mCallBackWeakReference.get();
+        if (activity == null || callBack == null) {
             return;
         }
-        GpsStatusDetectorCallBack callBack = (GpsStatusDetectorCallBack) activity;
-
 
         if (isGpsEnabled(activity)) {
             callBack.onGpsSettingStatus(true);
@@ -105,10 +112,10 @@ public class GpsStatusDetector implements
 
     public void checkOnActivityResult(int requestCode, int resultCode) {
         Activity activity = mActivityWeakReference.get();
-        if (activity == null) {
+        GpsStatusDetectorCallBack callBack = mCallBackWeakReference.get();
+        if (activity == null || callBack == null) {
             return;
         }
-        GpsStatusDetectorCallBack callBack = (GpsStatusDetectorCallBack) activity;
 
         if (requestCode == GpsStatusDetector.REQUEST_CODE) {
             if (resultCode == RESULT_OK) {
