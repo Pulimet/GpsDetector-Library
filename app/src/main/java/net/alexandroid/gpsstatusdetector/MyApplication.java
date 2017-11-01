@@ -2,8 +2,7 @@ package net.alexandroid.gpsstatusdetector;
 
 import android.app.Application;
 
-import net.alexandroid.shpref.MyLog;
-import net.alexandroid.shpref.ShPref;
+import net.alexandroid.utils.mylog.MyLog;
 
 
 public class MyApplication extends Application {
@@ -11,7 +10,7 @@ public class MyApplication extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
-        ShPref.init(getApplicationContext(), ShPref.APPLY);
-        MyLog.showLogs(true);
+
+        MyLog.init(this);
     }
 }
