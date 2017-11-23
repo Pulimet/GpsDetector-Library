@@ -58,7 +58,7 @@ public void onGpsAlertCanceledByUser() {
 
 
 
-- Create GpsStatusDetector instance, invoke checkLocationSettingStatus() method where you need.
+- Create GpsStatusDetector instance, invoke checkGpsStatus() method where you need.
 ```sh
 private GpsStatusDetector mGpsStatusDetector;
 
@@ -68,7 +68,7 @@ protected void onCreate(Bundle savedInstanceState) {
     setContentView(R.layout.activity_main);
 
     mGpsStatusDetector = new GpsStatusDetector(this);
-    mGpsStatusDetector.checkLocationSettingStatus();
+    mGpsStatusDetector.checkGpsStatus();
 }
 ```
 
